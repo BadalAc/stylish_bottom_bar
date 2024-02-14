@@ -319,7 +319,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
               elevation: widget.elevation,
               color: widget.backgroundColor ?? Colors.white,
               clipper: BarClipper(
-                shape: widget.hasCircleNotch
+                shape: !widget.hasCircleNotch
                     ? const AutomaticNotchedShape(
                         RoundedRectangleBorder(),
                         RoundedRectangleBorder(
