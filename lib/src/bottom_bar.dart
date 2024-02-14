@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/helpers/bottom_bar.dart';
@@ -5,12 +7,12 @@ import 'package:stylish_bottom_bar/helpers/enums.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/model/options.dart';
 import 'package:stylish_bottom_bar/src/dot_nav/dot_nav_tile.dart';
-import 'anim_nav/animated_nav_tiles.dart';
-import 'bubble_nav_bar/bubble_navigation_tile.dart';
+
 import '../helpers/cliper.dart';
 import '../helpers/constant.dart';
+import 'anim_nav/animated_nav_tiles.dart';
+import 'bubble_nav_bar/bubble_navigation_tile.dart';
 import 'widgets/widgets.dart';
-import 'dart:math' as math;
 
 ///[StylishBottomBar] class to implement beautiful bottom bar widget
 ///
@@ -56,21 +58,22 @@ import 'dart:math' as math;
 ///```
 
 class StylishBottomBar extends StatefulWidget {
-  StylishBottomBar({
-    super.key,
-    required this.items,
-    this.backgroundColor,
-    this.elevation = 8.0,
-    this.currentIndex = 0,
-    this.onTap,
-    this.borderRadius,
-    this.fabLocation,
-    this.hasNotch = false,
-    required this.option,
-    this.gradient,
-    this.iconSpace = 1.5,
-    this.notchStyle = NotchStyle.themeDefault,
-  })  : assert(items.length >= 2,
+  StylishBottomBar(
+      {super.key,
+      required this.items,
+      this.backgroundColor,
+      this.elevation = 8.0,
+      this.currentIndex = 0,
+      this.onTap,
+      this.borderRadius,
+      this.fabLocation,
+      this.hasNotch = false,
+      required this.option,
+      this.gradient,
+      this.iconSpace = 1.5,
+      this.notchStyle = NotchStyle.themeDefault,
+      this.hasCircleNotch = false})
+      : assert(items.length >= 2,
             '\n\nStylish Bottom Navigation must have 2 or more items'),
         assert(
           items.every((BottomBarItem item) => item.title != null) == true,
@@ -115,6 +118,7 @@ class StylishBottomBar extends StatefulWidget {
   ///   );
   ///```
   final bool hasNotch;
+  final bool hasCircleNotch;
 
   ///Function to return current selected item index
   ///
@@ -315,7 +319,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
               elevation: widget.elevation,
               color: widget.backgroundColor ?? Colors.white,
               clipper: BarClipper(
-                shape: isUsingMaterial3
+                shape: widget.hasCircleNotch
                     ? const AutomaticNotchedShape(
                         RoundedRectangleBorder(),
                         RoundedRectangleBorder(
